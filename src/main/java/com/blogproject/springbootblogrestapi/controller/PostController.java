@@ -64,4 +64,11 @@ public class PostController {
 
         return new ResponseEntity<>("Post entity deleted successfully", HttpStatus.OK);
     }
+
+    // build get posts by category id REST API
+    @GetMapping("/category/{id}")
+    public ResponseEntity<List<PostDto>> getPostsByCategory(@PathVariable(name = "id") Long categoryId) {
+        List<PostDto> postDtos = postService.getPostsByCategory(categoryId);
+        return ResponseEntity.ok(postDtos);
+    }
 }
