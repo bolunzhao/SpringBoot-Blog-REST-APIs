@@ -55,7 +55,7 @@ public class AuthController {
             responseCode = "201",
             description = "HTTP Status 201 CREATED"
     )
-    @PostMapping(value = {"/register", "signup"})
+    @PostMapping(value = {"/register", "/signup"})
     public ResponseEntity<String> register(@RequestBody RegisterDto registerDto) {
         String response = authService.register(registerDto);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
