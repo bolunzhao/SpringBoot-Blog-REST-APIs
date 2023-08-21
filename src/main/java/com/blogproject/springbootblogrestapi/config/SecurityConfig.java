@@ -65,6 +65,7 @@ public class SecurityConfig {
                                         .requestMatchers("/api/v1/auth/**").permitAll()
                                         .requestMatchers("/swagger-ui/**").permitAll()
                                         .requestMatchers("/v3/api-docs/**").permitAll()
+                                        .requestMatchers("/api/v1/orders").permitAll()
                                         .anyRequest().authenticated()
                 ).exceptionHandling(exception -> exception
                         .authenticationEntryPoint(authenticationEntryPoint)
