@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  blogdb:
+    container_name: blogdb
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: myblogdb
+    networks:
+      springboot-rest-api-mysql-net:
+
+  springboot-blog-rest-api:
+    container_name: springboot-blog-rest-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      springboot-rest-api-mysql-net:
+    restart: on-failure
+
+
+
+networks:
+  springboot-rest-api-mysql-net:
