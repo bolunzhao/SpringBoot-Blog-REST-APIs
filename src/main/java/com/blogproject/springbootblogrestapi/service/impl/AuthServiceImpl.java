@@ -71,9 +71,29 @@ public class AuthServiceImpl implements AuthService {
         user.setEmail(registerDto.getEmail());
         user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
 
+        long userCount = userRepository.count();
+
         Set<Role> roles = new HashSet<>();
-        Role userRole = roleRepository.findByName("ROLE_USER").get();
-        roles.add(userRole);
+        if (userCount == 0) {
+            // FIRST user => admin
+            Role adminRole = roleRepository.findByName("ROLE_ADMIN")
+                    .orElseThrow(() -> new BlogAPIException(
+                            HttpStatus.NOT_FOUND, "ROLE_ADMIN not found in database!"
+                    ));
+            roles.add(adminRole);
+
+            // Optionally add ROLE_USER as well if you want them to have both
+            // Role userRole = roleRepository.findByName("ROLE_USER").get();
+            // roles.add(userRole);
+        } else {
+            // Not the first user => normal user
+            Role userRole = roleRepository.findByName("ROLE_USER")
+                    .orElseThrow(() -> new BlogAPIException(
+                            HttpStatus.NOT_FOUND, "ROLE_USER not found in database!"
+                    ));
+            roles.add(userRole);
+        }
+
         user.setRoles(roles);
 
         userRepository.save(user);
