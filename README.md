@@ -35,20 +35,17 @@ This project is a Spring Boot-based REST API for a blogging platform. It provide
    ```
    git clone [your-repository-url]
    cd springboot-blog-rest-api
-   
 2. **Database Configuration:**  
-   Update the ```src/main/resources/application.properties``` file with your MySQL database credentials and URL.  **
+   Update the ```src/main/resources/application.properties``` file with your MySQL database credentials and URL.  
     ```
     spring.datasource.url=jdbc:mysql://localhost:3306/your_database
     spring.datasource.username=your_username
     spring.datasource.password=your_password
-   
 3. Run the Application: Build and run the application using Maven.
     ```
     mvn clean install
-    mvn spring-boot:run  
-
-
+    mvn spring-boot:run
+   
 ## API Endpoints
 
 Detail some of the critical endpoints, e.g.,
