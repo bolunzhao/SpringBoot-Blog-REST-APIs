@@ -4,10 +4,12 @@ import com.blogproject.springbootblogrestapi.payload.CommentDto;
 import com.blogproject.springbootblogrestapi.service.CommentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,6 +35,8 @@ public class CommentController {
             description = "HTTP Status 201 CREATED"
     )
     @PostMapping("/posts/{postId}/comments")
+    @PreAuthorize("isAuthenticated()") // Ensures that only authenticated users can create comments
+    @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<CommentDto> createComment(@PathVariable(value = "postId") long postId,
                                                     @Valid @RequestBody CommentDto commentDto) {
         return new ResponseEntity<>(commentService.createComment(postId, commentDto), HttpStatus.CREATED);
@@ -76,6 +80,8 @@ public class CommentController {
             description = "HTTP Status 200 SUCCESS"
     )
     @PutMapping("/posts/{postId}/comments/{commentId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<CommentDto> updateComment(@PathVariable(value = "postId") Long postId,
                                                     @PathVariable(value = "commentId") Long commentId,
                                                     @Valid @RequestBody CommentDto commentDto) {
@@ -92,6 +98,8 @@ public class CommentController {
             description = "HTTP Status 200 SUCCESS"
     )
     @DeleteMapping("/posts/{postId}/comments/{commentId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<String> deleteComment(@PathVariable(value = "postId") Long postId,
                                                 @PathVariable(value = "commentId") Long commentId){
         commentService.deleteComment(postId,commentId);

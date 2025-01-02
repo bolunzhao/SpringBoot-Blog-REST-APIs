@@ -2,7 +2,11 @@ package com.blogproject.springbootblogrestapi.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -27,6 +31,10 @@ public class Post {
     private String description;
     @Column(name = "content", nullable = false)
     private String content;
+    @CreationTimestamp
+    private ZonedDateTime createdTime;
+    @UpdateTimestamp
+    private ZonedDateTime updatedTime;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Comment> comments = new HashSet<>();

@@ -24,8 +24,9 @@ public class JwtTokenProvider {
     private Long jwtExpirationDate;
 
     // generate JWT token
-    public String generateToken(Authentication authentication) {
-        String username = authentication.getName();
+    public String generateToken(Authentication authentication, String username) {
+//        String username = authentication.getName();
+//        System.out.println(username);
 
         Date currentDate = new Date();
 
@@ -44,6 +45,7 @@ public class JwtTokenProvider {
                 .signWith(key())
                 .compact();
 
+//        System.out.println(token);
         return token;
     }
 

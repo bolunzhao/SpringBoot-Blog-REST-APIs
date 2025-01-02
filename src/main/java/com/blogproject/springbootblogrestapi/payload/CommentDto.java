@@ -5,6 +5,10 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.ZonedDateTime;
 
 @Data
 @Schema(
@@ -19,18 +23,12 @@ public class CommentDto {
     @NotEmpty(message = "Name should not be null or empty")
     private String name;
 
-    // email field validation
-    @Schema(
-            description = "Post Comment Author Email"
-    )
-    @NotEmpty(message = "Email should not be null or empty")
-    @Email
-    private String email;
-
     @Schema(
             description = "Post Comment Body"
     )
     @NotEmpty
     @Size(min = 10,message = "Comment should have at least 10 characters")
     private String body;
+    private ZonedDateTime createdTime;
+    private ZonedDateTime updatedTime;
 }

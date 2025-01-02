@@ -84,7 +84,6 @@ public class CommentServiceImpl implements CommentService {
         }
 
         comment.setName(commentRequest.getName());
-        comment.setEmail(commentRequest.getEmail());
         comment.setBody(commentRequest.getBody());
 
         Comment updatedComment = commentRepository.save(comment);
@@ -108,8 +107,14 @@ public class CommentServiceImpl implements CommentService {
         commentRepository.delete(comment);
     }
 
+    public boolean isCommentOwner(Long commentId, String name) {
+        return commentRepository.findById(commentId)
+                .map(comment -> comment.getName().equals(name))
+                .orElse(false);
+    }
+
     private CommentDto mapToDTO(Comment comment) {
-        CommentDto commentDto=mapper.map(comment, CommentDto.class);
+        CommentDto commentDto = mapper.map(comment, CommentDto.class);
 
 //        CommentDto commentDto = new CommentDto();
 //        commentDto.setId(comment.getId());
@@ -121,7 +126,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     private Comment mapToEntity(CommentDto commentDto) {
-        Comment comment=mapper.map(commentDto,Comment.class);
+        Comment comment = mapper.map(commentDto, Comment.class);
 
 //        Comment comment = new Comment();
 //        comment.setId(commentDto.getId());
