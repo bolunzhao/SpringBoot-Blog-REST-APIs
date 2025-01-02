@@ -45,7 +45,6 @@ This project is a Spring Boot-based REST API for a blogging platform. It provide
     ```
     mvn clean install
     mvn spring-boot:run
-   
 ## API Endpoints
 
 Detail some of the critical endpoints, e.g.,
